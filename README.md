@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Parabrisas San Marcos
 
-## Getting Started
+Sitio web y panel de gestión de cotizaciones para **Parabrisas San Marcos**, negocio de venta e instalación de parabrisas y cristales automotrices en Aguascalientes.
 
-First, run the development server:
+🔗 **En vivo:** https://parabrisassanmarcos.autos
+
+## ¿Qué hace?
+
+- **Sitio público** con información del negocio, servicios y sucursales.
+- **Formulario de cotización** con validación de teléfono internacional (selector de país) y doble canal de envío: WhatsApp (mensaje pre-armado) o correo electrónico.
+- **Panel de administración privado** (protegido con contraseña) para ver, buscar, filtrar y gestionar el estado de todas las cotizaciones recibidas.
+
+## Stack
+
+- [Next.js](https://nextjs.org) 16 — App Router, React Server Components
+- React 19 + TypeScript
+- Tailwind CSS 4
+- PostgreSQL (Neon, serverless) con `pg`
+- Desplegado en [Railway](https://railway.app)
+
+## Correr en local
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Luego abre [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Variables de entorno
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Crea un archivo `.env.local` en la raíz con:
 
-## Learn More
+```
+DATABASE_URL=...     # cadena de conexión de PostgreSQL (Neon)
+ADMIN_PASSWORD=...   # contraseña del panel de administración
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Despliegue
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Se despliega en Railway con `railway up`. Las variables de entorno se configuran en el panel de Railway.

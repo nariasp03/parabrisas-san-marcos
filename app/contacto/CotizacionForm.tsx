@@ -149,7 +149,7 @@ export default function CotizacionForm() {
     const waUrl = `https://wa.me/${WHATSAPP}?text=${texto}`;
     setWaLink(waUrl);
 
-    // Guardamos la cotización en la base de datos (para el panel /admin).
+    // Guardamos la cotización en la base de datos (para el panel privado).
     // "Best-effort" y sin await: si fallara, no bloqueamos al cliente ni
     // impedimos que se abra WhatsApp.
     fetch("/api/cotizaciones", {
