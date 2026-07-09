@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* Verdes de marca (Glass Master) */
+  --color-primary: #2d7a3a;
+  --color-primary-dark: #1b4d27;
+  --color-primary-light: #4caf6a;
+
+  /* Superficies y texto */
+  --color-bgalt: #f4f9f5;
+  --color-ink: #1a1a1a;
+  --color-muted: #5c5c5c;
+  --color-line: #d6e8da;
+  --color-danger: #ef4444;
+
+  /* Tipografía */
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-montserrat);
+}
+
+body {
+  background-color: #ffffff;
+  color: #1a1a1a;
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
