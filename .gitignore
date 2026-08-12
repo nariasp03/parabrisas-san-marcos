@@ -39,3 +39,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Carpetas de assets originales (fotos/videos/logos crudos) — NO versionar (muy pesadas)
+/FOTOS PBSM/
+/FOTOS PBSM 2/
+/LOGO PLK/
+/LOGOS FLOTILLAS/
+/LOGOS/
+/LOGOS_ASEGURADORAS/

@@ -41,6 +41,9 @@ export type Cotizacion = {
   empresa: string | null;
   num_unidades: string | null;
   vehiculo: string;
+  marca: string | null;
+  modelo: string | null;
+  anio: string | null;
   cristal: string;
   sucursal: string;
   direccion_domicilio: string | null;
@@ -62,6 +65,9 @@ async function ensureTable() {
       empresa TEXT,
       num_unidades TEXT,
       vehiculo TEXT NOT NULL DEFAULT '',
+      marca TEXT,
+      modelo TEXT,
+      anio TEXT,
       cristal TEXT NOT NULL DEFAULT '',
       sucursal TEXT NOT NULL DEFAULT '',
       direccion_domicilio TEXT,
@@ -69,6 +75,10 @@ async function ensureTable() {
       estado TEXT NOT NULL DEFAULT 'Pendiente'
     );
   `);
+  // Para tablas que ya existían antes de agregar marca/modelo/año.
+  await pool.query(`ALTER TABLE cotizaciones ADD COLUMN IF NOT EXISTS marca TEXT;`);
+  await pool.query(`ALTER TABLE cotizaciones ADD COLUMN IF NOT EXISTS modelo TEXT;`);
+  await pool.query(`ALTER TABLE cotizaciones ADD COLUMN IF NOT EXISTS anio TEXT;`);
   tablaLista = true;
 }
 
@@ -80,6 +90,9 @@ export type NuevaCotizacion = {
   empresa?: string | null;
   num_unidades?: string | null;
   vehiculo: string;
+  marca?: string | null;
+  modelo?: string | null;
+  anio?: string | null;
   cristal: string;
   sucursal: string;
   direccion_domicilio?: string | null;
@@ -91,8 +104,8 @@ export async function insertarCotizacion(c: NuevaCotizacion) {
   await pool.query(
     `INSERT INTO cotizaciones
        (nombre, telefono, tipo_cliente, aseguradora, empresa, num_unidades,
-        vehiculo, cristal, sucursal, direccion_domicilio, contacto_via)
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)`,
+        vehiculo, marca, modelo, anio, cristal, sucursal, direccion_domicilio, contacto_via)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)`,
     [
       c.nombre,
       c.telefono,
@@ -101,6 +114,9 @@ export async function insertarCotizacion(c: NuevaCotizacion) {
       c.empresa ?? null,
       c.num_unidades ?? null,
       c.vehiculo,
+      c.marca ?? null,
+      c.modelo ?? null,
+      c.anio ?? null,
       c.cristal,
       c.sucursal,
       c.direccion_domicilio ?? null,

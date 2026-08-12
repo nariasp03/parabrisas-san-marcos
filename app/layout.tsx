@@ -32,7 +32,7 @@ export default function RootLayout({
       lang="es"
       className={`${montserrat.variable} ${inter.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-white text-ink">
+      <body className="min-h-full flex flex-col overflow-x-hidden bg-white text-ink">
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />

@@ -1,25 +1,11 @@
 import type { Metadata } from "next";
+import Valores from "./Valores";
 
 export const metadata: Metadata = {
   title: "Nosotros · Parabrisas San Marcos",
   description:
     "Conoce Parabrisas San Marcos: profesionalismo, rapidez y calidad en cristales automotrices.",
 };
-
-const valores = [
-  {
-    titulo: "Profesionalismo",
-    desc: "Personal capacitado y un trato cuidadoso en cada instalación.",
-  },
-  {
-    titulo: "Rapidez",
-    desc: "Servicios en tiempo y forma, adaptándonos a tu disponibilidad.",
-  },
-  {
-    titulo: "Calidad",
-    desc: "Cristales y materiales de primera, con resultados garantizados.",
-  },
-];
 
 const horarios = [
   { dia: "Lunes a Viernes", hora: "9:00 am – 6:00 pm" },
@@ -40,26 +26,34 @@ export default function NosotrosPage() {
         asegurados y flotillas de empresas.
       </p>
 
+      <div className="mt-8 overflow-hidden rounded-[28px] shadow-xl shadow-primary-deep/15">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/fotos/home-nosotros.jpg"
+          alt="Equipo de Parabrisas San Marcos"
+          className="h-[260px] w-full object-cover object-[center_35%] sm:h-[400px]"
+        />
+      </div>
+
       {/* Valores */}
       <h2 className="mt-14 font-display text-2xl font-extrabold text-ink">
         Nuestros valores
       </h2>
-      <div className="mt-6 grid gap-6 sm:grid-cols-3">
-        {valores.map((v) => (
-          <div
-            key={v.titulo}
-            className="rounded-2xl border border-line bg-white p-6"
-          >
-            <h3 className="font-display text-lg font-bold text-primary">{v.titulo}</h3>
-            <p className="mt-2 text-sm text-muted">{v.desc}</p>
-          </div>
-        ))}
-      </div>
+      <Valores />
 
       {/* Misión */}
-      <div className="mt-14 rounded-2xl border border-line bg-bgalt p-8">
-        <h2 className="font-display text-xl font-bold text-ink">Nuestra misión</h2>
-        <p className="mt-3 text-muted">
+      <div className="mt-14 overflow-hidden rounded-[28px] bg-gradient-to-br from-primary to-primary-deep p-8 text-white shadow-2xl shadow-primary-deep/25 sm:p-10">
+        <div className="flex items-center gap-3">
+          <span className="grid h-11 w-11 flex-none place-items-center rounded-2xl bg-white/15">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
+              <circle cx="12" cy="12" r="9" />
+              <circle cx="12" cy="12" r="5" />
+              <circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none" />
+            </svg>
+          </span>
+          <h2 className="font-display text-2xl font-extrabold">Nuestra misión</h2>
+        </div>
+        <p className="mt-4 max-w-2xl text-lg leading-relaxed text-white/85">
           Proporcionar servicios de alta calidad en tiempo y forma. Nuestro equipo se
           adapta a las necesidades específicas de cada cliente para garantizar la
           excelencia, con eficiencia, comunicación clara y un servicio inigualable.

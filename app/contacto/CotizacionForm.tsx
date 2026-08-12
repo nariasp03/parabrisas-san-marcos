@@ -13,13 +13,14 @@ const cristales = [
   "Otro",
 ];
 
-const sucursales = [
-  "Aguascalientes Norte (Fracc. Los Sauces)",
-  "Aguascalientes Sur (Monumento al Papa Juan Pablo II)",
-  "Zacatecas, Zac. (Héroes de la Reforma)",
-  "Lagos de Moreno, Jal. (Pueblo de Moya)",
-  "León, Gto. (Jardines de Oriente)",
-  "Servicio a domicilio (alrededores de todas las sucursales, Encarnación de Díaz y Villa Hidalgo, Jal.)",
+// Cada sucursal con su teléfono principal (para llamadas) y su WhatsApp.
+const sucursales: { label: string; tel: string; wa: string }[] = [
+  { label: "Aguascalientes Norte (Fracc. Los Sauces)", tel: "449 309 3246", wa: "524493093246" },
+  { label: "Aguascalientes Sur (Monumento al Papa Juan Pablo II)", tel: "449 401 6472", wa: "524494016472" },
+  { label: "Zacatecas, Zac. (Héroes de la Reforma)", tel: "492 491 0921", wa: "524491192439" },
+  { label: "Lagos de Moreno, Jal. (Pueblo de Moya)", tel: "474 108 0287", wa: "524741080287" },
+  { label: "León, Gto. (Jardines de Oriente)", tel: "477 141 9055", wa: "524771419055" },
+  { label: "Servicio a domicilio (alrededores de todas las sucursales, Encarnación de Díaz y Villa Hidalgo, Jal.)", tel: "449 309 3246", wa: "524493093246" },
 ];
 
 const inputClass =
@@ -29,27 +30,27 @@ const inputClass =
 // debe tener el número (sin el código de país). México va primero (es el
 // principal). La última opción, "Otro país", deja escribir una lada manual.
 const paises = [
-  { code: "MX", label: "México", dial: "52", flag: "🇲🇽", min: 10, max: 10, ejemplo: "449 123 4567" },
-  { code: "US", label: "Estados Unidos", dial: "1", flag: "🇺🇸", min: 10, max: 10, ejemplo: "555 123 4567" },
-  { code: "CA", label: "Canadá", dial: "1", flag: "🇨🇦", min: 10, max: 10, ejemplo: "416 123 4567" },
-  { code: "GT", label: "Guatemala", dial: "502", flag: "🇬🇹", min: 8, max: 8, ejemplo: "5123 4567" },
-  { code: "SV", label: "El Salvador", dial: "503", flag: "🇸🇻", min: 8, max: 8, ejemplo: "7123 4567" },
-  { code: "HN", label: "Honduras", dial: "504", flag: "🇭🇳", min: 8, max: 8, ejemplo: "9123 4567" },
-  { code: "CR", label: "Costa Rica", dial: "506", flag: "🇨🇷", min: 8, max: 8, ejemplo: "8312 3456" },
-  { code: "PA", label: "Panamá", dial: "507", flag: "🇵🇦", min: 7, max: 8, ejemplo: "6123 4567" },
-  { code: "CO", label: "Colombia", dial: "57", flag: "🇨🇴", min: 10, max: 10, ejemplo: "300 123 4567" },
-  { code: "VE", label: "Venezuela", dial: "58", flag: "🇻🇪", min: 10, max: 10, ejemplo: "412 123 4567" },
-  { code: "EC", label: "Ecuador", dial: "593", flag: "🇪🇨", min: 9, max: 9, ejemplo: "99 123 4567" },
-  { code: "PE", label: "Perú", dial: "51", flag: "🇵🇪", min: 9, max: 9, ejemplo: "912 345 678" },
-  { code: "CL", label: "Chile", dial: "56", flag: "🇨🇱", min: 9, max: 9, ejemplo: "9 1234 5678" },
-  { code: "AR", label: "Argentina", dial: "54", flag: "🇦🇷", min: 10, max: 11, ejemplo: "11 1234 5678" },
-  { code: "BR", label: "Brasil", dial: "55", flag: "🇧🇷", min: 10, max: 11, ejemplo: "11 91234 5678" },
-  { code: "ES", label: "España", dial: "34", flag: "🇪🇸", min: 9, max: 9, ejemplo: "612 34 56 78" },
-  { code: "OTRO", label: "Otro país", dial: "", flag: "🌎", min: 6, max: 15, ejemplo: "Tu número" },
+  { code: "MX", label: "México", dial: "52", min: 10, max: 10, ejemplo: "449 123 4567" },
+  { code: "US", label: "Estados Unidos", dial: "1", min: 10, max: 10, ejemplo: "555 123 4567" },
+  { code: "CA", label: "Canadá", dial: "1", min: 10, max: 10, ejemplo: "416 123 4567" },
+  { code: "GT", label: "Guatemala", dial: "502", min: 8, max: 8, ejemplo: "5123 4567" },
+  { code: "SV", label: "El Salvador", dial: "503", min: 8, max: 8, ejemplo: "7123 4567" },
+  { code: "HN", label: "Honduras", dial: "504", min: 8, max: 8, ejemplo: "9123 4567" },
+  { code: "CR", label: "Costa Rica", dial: "506", min: 8, max: 8, ejemplo: "8312 3456" },
+  { code: "PA", label: "Panamá", dial: "507", min: 7, max: 8, ejemplo: "6123 4567" },
+  { code: "CO", label: "Colombia", dial: "57", min: 10, max: 10, ejemplo: "300 123 4567" },
+  { code: "VE", label: "Venezuela", dial: "58", min: 10, max: 10, ejemplo: "412 123 4567" },
+  { code: "EC", label: "Ecuador", dial: "593", min: 9, max: 9, ejemplo: "99 123 4567" },
+  { code: "PE", label: "Perú", dial: "51", min: 9, max: 9, ejemplo: "912 345 678" },
+  { code: "CL", label: "Chile", dial: "56", min: 9, max: 9, ejemplo: "9 1234 5678" },
+  { code: "AR", label: "Argentina", dial: "54", min: 10, max: 11, ejemplo: "11 1234 5678" },
+  { code: "BR", label: "Brasil", dial: "55", min: 10, max: 11, ejemplo: "11 91234 5678" },
+  { code: "ES", label: "España", dial: "34", min: 9, max: 9, ejemplo: "612 34 56 78" },
+  { code: "OTRO", label: "Otro país", dial: "", min: 6, max: 15, ejemplo: "Tu número" },
 ];
 
-// Número de WhatsApp del negocio (formato internacional sin signos ni espacios).
-const WHATSAPP = "524491863483";
+// WhatsApp por defecto (respaldo). El real se toma de la sucursal elegida.
+const WHATSAPP = "524493093246";
 
 // Llave de Web3Forms: cuando el cliente elige "Teléfono", el formulario envía
 // un correo con sus datos a la dirección registrada en web3forms.com.
@@ -110,6 +111,17 @@ export default function CotizacionForm() {
     const data = new FormData(e.currentTarget);
     const get = (k: string) => (data.get(k) as string)?.trim() || "";
 
+    // Vehículo: para flotilla es texto libre (varias unidades); para
+    // particular/asegurado son 3 campos (marca, modelo y año) que combinamos
+    // en una sola cadena para guardarla y mostrarla en el panel.
+    const esFlotilla = get("tipoCliente") === "flotilla";
+    const marca = get("marca");
+    const modelo = get("modelo");
+    const anio = get("anio");
+    const vehiculoTexto = esFlotilla
+      ? get("vehiculo")
+      : [marca, modelo, anio].filter(Boolean).join(" ");
+
     // Teléfono completo en formato internacional, ej: +52 4491234567
     const telCompleto = `+${ladaActual} ${digitosTel}`;
 
@@ -135,7 +147,9 @@ export default function CotizacionForm() {
       get("aseguradora") && `*Aseguradora:* ${get("aseguradora")}`,
       get("empresa") && `*Empresa / flotilla:* ${get("empresa")}`,
       get("numUnidades") && `*Unidades a atender:* ${get("numUnidades")}`,
-      `*Vehículo y modelo:* ${get("vehiculo")}`,
+      esFlotilla
+        ? `*Vehículos y modelos:* ${vehiculoTexto}`
+        : `*Marca:* ${marca}\n*Modelo:* ${modelo}\n*Año:* ${anio}`,
       `*Cristal a reemplazar:* ${get("cristal")}`,
       `*Sucursal:* ${get("sucursal")}`,
       get("direccionDomicilio") &&
@@ -145,8 +159,10 @@ export default function CotizacionForm() {
 
     // Enlace de WhatsApp con el cuestionario ya escrito. Lo guardamos para
     // poder usarlo también en la pantalla de confirmación (opción Teléfono).
+    const sucSel = sucursales.find((x) => x.label === sucursal);
+    const waNum = sucSel?.wa || WHATSAPP;
     const texto = encodeURIComponent(lineas.join("\n"));
-    const waUrl = `https://wa.me/${WHATSAPP}?text=${texto}`;
+    const waUrl = `https://wa.me/${waNum}?text=${texto}`;
     setWaLink(waUrl);
 
     // Guardamos la cotización en la base de datos (para el panel privado).
@@ -162,7 +178,10 @@ export default function CotizacionForm() {
         aseguradora: get("aseguradora"),
         empresa: get("empresa"),
         num_unidades: get("numUnidades"),
-        vehiculo: get("vehiculo"),
+        vehiculo: vehiculoTexto,
+        marca: esFlotilla ? "" : marca,
+        modelo: esFlotilla ? "" : modelo,
+        anio: esFlotilla ? "" : anio,
         cristal: get("cristal"),
         sucursal: get("sucursal"),
         direccion_domicilio: get("direccionDomicilio"),
@@ -183,7 +202,7 @@ export default function CotizacionForm() {
           },
           body: JSON.stringify({
             access_key: WEB3FORMS_KEY,
-            subject: "📞 Nueva cotización para LLAMAR - Parabrisas San Marcos",
+            subject: "Nueva cotización para LLAMAR - Parabrisas San Marcos",
             from_name: "Sitio web Parabrisas San Marcos",
             Nombre: get("nombre"),
             Teléfono: telCompleto,
@@ -191,7 +210,9 @@ export default function CotizacionForm() {
             ...(get("aseguradora") && { Aseguradora: get("aseguradora") }),
             ...(get("empresa") && { "Empresa / flotilla": get("empresa") }),
             ...(get("numUnidades") && { "Unidades a atender": get("numUnidades") }),
-            "Vehículo y modelo": get("vehiculo"),
+            ...(esFlotilla
+              ? { "Vehículos y modelos": vehiculoTexto }
+              : { Marca: marca, Modelo: modelo, Año: anio }),
             "Cristal a reemplazar": get("cristal"),
             Sucursal: get("sucursal"),
             ...(get("direccionDomicilio") && {
@@ -223,9 +244,20 @@ export default function CotizacionForm() {
   }
 
   if (enviado) {
+    const sucSel = sucursales.find((x) => x.label === sucursal);
     return (
       <div className="rounded-2xl border border-line bg-bgalt p-6 text-center sm:p-8">
-        <div className="text-4xl">{metodoEnviado === "telefono" ? "📞" : "✅"}</div>
+        <div className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-primary/10 text-primary">
+          {metodoEnviado === "telefono" ? (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-7 w-7">
+              <path d="M6.5 10.8a13 13 0 0 0 6.7 6.7l2-2a1 1 0 0 1 1-.25 10 10 0 0 0 3.2.5 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A16 16 0 0 1 3 5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1 10 10 0 0 0 .5 3.2 1 1 0 0 1-.25 1z" />
+            </svg>
+          ) : (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="h-7 w-7">
+              <path d="M5 12l4.5 4.5L19 7" />
+            </svg>
+          )}
+        </div>
         {metodoEnviado === "telefono" ? (
           <>
             <h2 className="mt-3 font-display text-xl font-bold text-ink">
@@ -245,6 +277,17 @@ export default function CotizacionForm() {
               </a>
               .
             </p>
+            {sucSel?.tel && (
+              <p className="mt-3 text-sm text-muted">
+                O llámanos directamente:{" "}
+                <a
+                  href={`tel:+52${sucSel.tel.replace(/\s/g, "")}`}
+                  className="font-semibold text-primary hover:underline"
+                >
+                  {sucSel.tel}
+                </a>
+              </p>
+            )}
           </>
         ) : (
           <>
@@ -286,9 +329,11 @@ export default function CotizacionForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-5 rounded-2xl border border-line bg-white p-6 sm:p-8"
+      className="relative isolate space-y-5 overflow-hidden rounded-[28px] border border-white/10 bg-coal p-6 text-white shadow-2xl shadow-black/40 sm:p-8"
     >
-      <p className="text-sm text-muted">
+      <div className="pointer-events-none absolute -right-16 -top-20 -z-10 h-64 w-64 rounded-full bg-primary/45 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-24 -left-20 -z-10 h-72 w-72 rounded-full bg-primary/25 blur-3xl" />
+      <p className="text-sm text-white/70">
         Todos los campos son obligatorios. Atendemos clientes{" "}
         <strong>particulares, asegurados y flotillas</strong>.
       </p>
@@ -319,7 +364,7 @@ export default function CotizacionForm() {
           >
             {paises.map((p) => (
               <option key={p.code} value={p.code}>
-                {p.flag} {p.label}
+                {p.label}
                 {p.dial ? ` +${p.dial}` : ""}
               </option>
             ))}
@@ -367,7 +412,7 @@ export default function CotizacionForm() {
         {errorTel ? (
           <p className="mt-1 text-sm text-danger">{errorTel}</p>
         ) : (
-          <p className="mt-1 text-xs text-muted">
+          <p className="mt-1 text-xs text-white/60">
             {esOtroPais
               ? "Escribe la lada de tu país y luego tu número."
               : paisActual.min === paisActual.max
@@ -455,14 +500,11 @@ export default function CotizacionForm() {
         </>
       )}
 
-      {/* Vehículo y modelo */}
-      {tipoCliente && (
+      {/* Vehículo — flotilla: texto libre (varias unidades) */}
+      {tipoCliente === "flotilla" && (
         <div>
           <label htmlFor="vehiculo" className="text-sm font-medium">
-            {tipoCliente === "flotilla"
-              ? "Vehículo(s) y modelo(s)"
-              : "Vehículo y modelo"}{" "}
-            <span className="text-danger">*</span>
+            Vehículos y modelos <span className="text-danger">*</span>
           </label>
           <input
             id="vehiculo"
@@ -470,12 +512,55 @@ export default function CotizacionForm() {
             type="text"
             required
             className={inputClass}
-            placeholder={
-              tipoCliente === "flotilla"
-                ? "Ej: 3 Nissan NP300 2021, 2 Toyota Hiace 2022"
-                : "Ej: Nissan Versa 2020"
-            }
+            placeholder="Ej: 3 Nissan NP300 2021, 2 Toyota Hiace 2022"
           />
+        </div>
+      )}
+
+      {/* Vehículo — particular / asegurado: marca, modelo y año */}
+      {(tipoCliente === "particular" || tipoCliente === "asegurado") && (
+        <div className="grid gap-4 sm:grid-cols-3">
+          <div>
+            <label htmlFor="marca" className="text-sm font-medium">
+              Marca <span className="text-danger">*</span>
+            </label>
+            <input
+              id="marca"
+              name="marca"
+              type="text"
+              required
+              className={inputClass}
+              placeholder="Ej: Nissan"
+            />
+          </div>
+          <div>
+            <label htmlFor="modelo" className="text-sm font-medium">
+              Modelo <span className="text-danger">*</span>
+            </label>
+            <input
+              id="modelo"
+              name="modelo"
+              type="text"
+              required
+              className={inputClass}
+              placeholder="Ej: Versa"
+            />
+          </div>
+          <div>
+            <label htmlFor="anio" className="text-sm font-medium">
+              Año <span className="text-danger">*</span>
+            </label>
+            <input
+              id="anio"
+              name="anio"
+              type="number"
+              required
+              min={1950}
+              max={2100}
+              className={inputClass}
+              placeholder="Ej: 2010"
+            />
+          </div>
         </div>
       )}
 
@@ -513,8 +598,8 @@ export default function CotizacionForm() {
             Selecciona una sucursal
           </option>
           {sucursales.map((s) => (
-            <option key={s} value={s}>
-              {s}
+            <option key={s.label} value={s.label}>
+              {s.label}
             </option>
           ))}
         </select>
@@ -575,7 +660,7 @@ export default function CotizacionForm() {
       <button
         type="submit"
         disabled={enviando}
-        className="w-full rounded-full bg-primary px-6 py-3 font-semibold text-white transition-colors hover:bg-primary-light disabled:opacity-60"
+        className="w-full rounded-full bg-white px-6 py-3.5 font-bold text-primary transition-colors hover:bg-soft disabled:opacity-60"
       >
         {enviando ? "Enviando..." : "Recibir cotización"}
       </button>

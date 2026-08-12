@@ -26,7 +26,7 @@ const FILTROS = [
 function ViaBadge({ via }: { via: string }) {
   return via === "telefono" ? (
     <span className="inline-block rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-700">
-      📞 Llamar
+      Llamar
     </span>
   ) : (
     <span className="inline-block rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700">
@@ -113,7 +113,7 @@ export default function PanelCotizaciones({
           type="text"
           value={busqueda}
           onChange={(e) => setBusqueda(e.target.value)}
-          placeholder="🔍 Buscar por nombre, teléfono, vehículo..."
+          placeholder="Buscar por nombre, teléfono, vehículo..."
           className="w-full flex-1 rounded-lg border border-line bg-white px-3 py-2 text-sm text-ink outline-none focus:border-primary"
         />
         <select
@@ -185,7 +185,8 @@ export default function PanelCotizaciones({
                       {c.sucursal}
                       {c.direccion_domicilio ? (
                         <div className="mt-1 text-xs text-muted">
-                          📍 {c.direccion_domicilio}
+                          <span className="font-medium">Domicilio:</span>{" "}
+                          {c.direccion_domicilio}
                         </div>
                       ) : null}
                     </td>
@@ -218,7 +219,7 @@ export default function PanelCotizaciones({
                     href={`tel:${c.telefono.replace(/\s/g, "")}`}
                     className="font-medium text-primary hover:underline"
                   >
-                    📞 {c.telefono}
+                    {c.telefono}
                   </a>
                   <ViaBadge via={c.contacto_via} />
                 </div>

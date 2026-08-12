@@ -1,16 +1,20 @@
 @import "tailwindcss";
 
 @theme inline {
-  /* Verdes de marca (Glass Master) */
-  --color-primary: #2d7a3a;
-  --color-primary-dark: #1b4d27;
-  --color-primary-light: #4caf6a;
+  /* Verde de marca — bosque profesional, con personalidad */
+  --color-primary: #234721;
+  --color-primary-dark: #1a361a;
+  --color-primary-deep: #122611;
+  --color-primary-light: #6aa85e;
 
-  /* Superficies y texto */
-  --color-bgalt: #f4f9f5;
-  --color-ink: #1a1a1a;
-  --color-muted: #5c5c5c;
-  --color-line: #d6e8da;
+  /* Superficies y texto (más contraste, más negro) */
+  --color-paper: #f2f6f0;
+  --color-soft: #dde9d8;
+  --color-bgalt: #e9f1e6;
+  --color-ink: #0b110d;
+  --color-coal: #0c130f;
+  --color-muted: #58685d;
+  --color-line: #e0e9de;
   --color-danger: #ef4444;
 
   /* Tipografía */
@@ -19,7 +23,12 @@
 }
 
 body {
-  background-color: #ffffff;
-  color: #1a1a1a;
+  background-color: #f2f6f0;
+  color: #0b110d;
   font-family: var(--font-inter), system-ui, sans-serif;
+}
+
+/* Fondo del mapa (Leaflet) en negro para que se integre con la sección */
+.leaflet-container {
+  background: #0c130f !important;
 }

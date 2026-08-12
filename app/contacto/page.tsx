@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import CotizacionForm from "./CotizacionForm";
 
 export const metadata: Metadata = {
@@ -14,8 +15,7 @@ export default function ContactoPage() {
         Recibe una cotización
       </h1>
       <p className="mt-4 max-w-2xl text-lg text-muted">
-        Completa el formulario y te enviaremos tu cotización. También puedes llamarnos
-        directamente a la sucursal de tu preferencia.
+        Completa el formulario y te enviaremos tu cotización personalizada por WhatsApp o teléfono.
       </p>
 
       <div className="mt-12 grid gap-10 md:grid-cols-[1.5fr_1fr]">
@@ -23,42 +23,6 @@ export default function ContactoPage() {
 
         {/* Datos de contacto */}
         <div className="space-y-6">
-          <div className="rounded-2xl border border-line p-6">
-            <h2 className="font-display font-bold text-ink">Teléfonos</h2>
-            <ul className="mt-2 space-y-1 text-sm">
-              <li>
-                <span className="text-muted">Ags. Norte:</span>{" "}
-                <a href="tel:+524491531858" className="text-primary hover:underline">
-                  449 153 1858
-                </a>
-              </li>
-              <li>
-                <span className="text-muted">Ags. Sur:</span>{" "}
-                <a href="tel:+524491406600" className="text-primary hover:underline">
-                  449 140 6600
-                </a>
-              </li>
-              <li>
-                <span className="text-muted">León, Gto.:</span>{" "}
-                <a href="tel:+524777724089" className="text-primary hover:underline">
-                  477 772 4089
-                </a>
-              </li>
-              <li>
-                <span className="text-muted">Zacatecas:</span>{" "}
-                <a href="tel:+524924910921" className="text-primary hover:underline">
-                  492 491 0921
-                </a>
-              </li>
-              <li>
-                <span className="text-muted">Lagos / Jalisco:</span>{" "}
-                <a href="tel:+524747417930" className="text-primary hover:underline">
-                  474 741 7930
-                </a>
-              </li>
-            </ul>
-          </div>
-
           <div className="rounded-2xl border border-line p-6">
             <h2 className="font-display font-bold text-ink">Horario de atención</h2>
             <p className="mt-1 text-sm text-muted">
@@ -71,11 +35,19 @@ export default function ContactoPage() {
           </div>
 
           <div className="rounded-2xl border border-line bg-bgalt p-6">
-            <h2 className="font-display font-bold text-ink">Servicio a domicilio</h2>
+            <h2 className="font-display font-bold text-ink">¿Buscas una sucursal?</h2>
             <p className="mt-1 text-sm text-muted">
-              Todas nuestras sucursales cuentan con servicio a domicilio en sus
-              alrededores, incluyendo Encarnación de Díaz y Villa Hidalgo, Jal.
+              Consulta todas nuestras sucursales, con su ubicación y teléfonos.
             </p>
+            <Link
+              href="/ubicaciones"
+              className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-primary hover:text-primary-dark"
+            >
+              Ver sucursales
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </Link>
           </div>
         </div>
       </div>
