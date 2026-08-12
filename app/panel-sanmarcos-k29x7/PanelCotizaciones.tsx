@@ -43,6 +43,18 @@ export default function PanelCotizaciones({
   const [filtro, setFiltro] = useState("Total");
   const [busqueda, setBusqueda] = useState("");
   const [orden, setOrden] = useState<"nuevo" | "viejo">("nuevo");
+  const [filtroSucursal, setFiltroSucursal] = useState("");
+  const [filtroVia, setFiltroVia] = useState("");
+  const [filtroTipo, setFiltroTipo] = useState("");
+
+  const sucursalesUnicas = useMemo(
+    () => Array.from(new Set(cotizaciones.map((c) => c.sucursal).filter(Boolean))).sort(),
+    [cotizaciones],
+  );
+  const tiposUnicos = useMemo(
+    () => Array.from(new Set(cotizaciones.map((c) => c.tipo_cliente).filter(Boolean))).sort(),
+    [cotizaciones],
+  );
 
   const cuenta = (k: string) =>
     k === "Total"
@@ -54,6 +66,9 @@ export default function PanelCotizaciones({
     let lista = cotizaciones;
 
     if (filtro !== "Total") lista = lista.filter((c) => c.estado === filtro);
+    if (filtroSucursal) lista = lista.filter((c) => c.sucursal === filtroSucursal);
+    if (filtroVia) lista = lista.filter((c) => c.contacto_via === filtroVia);
+    if (filtroTipo) lista = lista.filter((c) => c.tipo_cliente === filtroTipo);
 
     const q = busqueda.trim().toLowerCase();
     if (q) {
@@ -80,7 +95,7 @@ export default function PanelCotizaciones({
       const fb = new Date(b.creado_en).getTime();
       return orden === "nuevo" ? fb - fa : fa - fb;
     });
-  }, [cotizaciones, filtro, busqueda, orden]);
+  }, [cotizaciones, filtro, busqueda, orden, filtroSucursal, filtroVia, filtroTipo]);
 
   return (
     <div className="mt-6">
@@ -123,6 +138,43 @@ export default function PanelCotizaciones({
         >
           <option value="nuevo">Recientes primero</option>
           <option value="viejo">Antiguos primero</option>
+        </select>
+      </div>
+
+      {/* Filtros por sucursal / vía / tipo de cliente */}
+      <div className="mt-3 grid gap-3 sm:grid-cols-3">
+        <select
+          value={filtroSucursal}
+          onChange={(e) => setFiltroSucursal(e.target.value)}
+          className="rounded-lg border border-line bg-white px-3 py-2 text-sm text-ink outline-none focus:border-primary"
+        >
+          <option value="">Todas las sucursales</option>
+          {sucursalesUnicas.map((s) => (
+            <option key={s} value={s}>
+              {s}
+            </option>
+          ))}
+        </select>
+        <select
+          value={filtroVia}
+          onChange={(e) => setFiltroVia(e.target.value)}
+          className="rounded-lg border border-line bg-white px-3 py-2 text-sm text-ink outline-none focus:border-primary"
+        >
+          <option value="">Todas las vías</option>
+          <option value="whatsapp">WhatsApp</option>
+          <option value="telefono">Llamar</option>
+        </select>
+        <select
+          value={filtroTipo}
+          onChange={(e) => setFiltroTipo(e.target.value)}
+          className="rounded-lg border border-line bg-white px-3 py-2 text-sm text-ink outline-none focus:border-primary"
+        >
+          <option value="">Todos los clientes</option>
+          {tiposUnicos.map((t) => (
+            <option key={t} value={t}>
+              {t}
+            </option>
+          ))}
         </select>
       </div>
 
