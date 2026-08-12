@@ -32,7 +32,7 @@ export default function FlotillasPage() {
               <img
                 src={f.logo}
                 alt={f.nombre}
-                className="max-h-full max-w-full object-contain"
+                className="max-h-16 max-w-[80%] object-contain"
               />
             ) : (
               <span className="font-display text-lg font-bold text-ink">{f.nombre}</span>

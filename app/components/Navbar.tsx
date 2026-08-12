@@ -45,7 +45,7 @@ export default function Navbar() {
           <img
             src={overlay ? "/logo-white.png" : "/logo-color.png"}
             alt="Parabrisas San Marcos"
-            className="h-12 w-auto"
+            className="h-16 w-auto"
           />
         </Link>
 

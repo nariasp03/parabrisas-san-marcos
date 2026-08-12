@@ -20,11 +20,15 @@ const sucursales: { label: string; tel: string; wa: string }[] = [
   { label: "Zacatecas, Zac. (Héroes de la Reforma)", tel: "492 491 0921", wa: "524491192439" },
   { label: "Lagos de Moreno, Jal. (Pueblo de Moya)", tel: "474 108 0287", wa: "524741080287" },
   { label: "León, Gto. (Jardines de Oriente)", tel: "477 141 9055", wa: "524771419055" },
-  { label: "Servicio a domicilio (alrededores de todas las sucursales, Encarnación de Díaz y Villa Hidalgo, Jal.)", tel: "449 309 3246", wa: "524493093246" },
+  { label: "Servicio a domicilio — Aguascalientes", tel: "449 309 3246", wa: "524493093246" },
+  { label: "Servicio a domicilio — Zacatecas", tel: "492 491 0921", wa: "524491192439" },
+  { label: "Servicio a domicilio — León", tel: "477 141 9055", wa: "524771419055" },
+  { label: "Servicio a domicilio — Lagos de Moreno, San Juan de los Lagos o Encarnación de Díaz", tel: "474 108 0287", wa: "524741080287" },
+  { label: "Servicio a domicilio — Villa Hidalgo", tel: "449 401 6472", wa: "524494016472" },
 ];
 
 const inputClass =
-  "mt-1 w-full rounded-lg border border-line bg-white px-3 py-2 text-sm text-ink outline-none focus:border-primary";
+  "mt-1 w-full rounded-lg border border-white/15 bg-white/10 px-3 py-2 text-sm text-white placeholder:text-white/40 outline-none focus:border-primary-light";
 
 // Países disponibles para el teléfono. "min"/"max" = cantidad de dígitos que
 // debe tener el número (sin el código de país). México va primero (es el
@@ -329,10 +333,12 @@ export default function CotizacionForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="relative isolate space-y-5 overflow-hidden rounded-[28px] border border-white/10 bg-coal p-6 text-white shadow-2xl shadow-black/40 sm:p-8"
+      className="cotiz-form relative isolate space-y-5 overflow-hidden rounded-[28px] border border-white/10 bg-coal p-6 text-white shadow-2xl shadow-black/40 sm:p-8"
     >
-      <div className="pointer-events-none absolute -right-16 -top-20 -z-10 h-64 w-64 rounded-full bg-primary/45 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-24 -left-20 -z-10 h-72 w-72 rounded-full bg-primary/25 blur-3xl" />
+      <style>{".cotiz-form option{background-color:#14261b;color:#fff}.cotiz-form select{color:#fff}"}</style>
+      <div className="pointer-events-none absolute -right-24 -top-28 -z-10 h-80 w-80 rounded-full bg-primary/55 blur-[100px]" />
+      <div className="pointer-events-none absolute -bottom-28 -left-24 -z-10 h-80 w-80 rounded-full bg-primary/35 blur-[100px]" />
+      <div className="pointer-events-none absolute left-1/3 top-1/2 -z-10 h-56 w-56 rounded-full bg-primary/15 blur-[100px]" />
       <p className="text-sm text-white/70">
         Todos los campos son obligatorios. Atendemos clientes{" "}
         <strong>particulares, asegurados y flotillas</strong>.
@@ -360,7 +366,7 @@ export default function CotizacionForm() {
               setPais(e.target.value);
               setErrorTel("");
             }}
-            className="rounded-lg border border-line bg-white px-2 py-2 text-sm text-ink outline-none focus:border-primary"
+            className="rounded-lg border border-white/15 bg-white/10 px-2 py-2 text-sm text-white outline-none focus:border-primary-light"
           >
             {paises.map((p) => (
               <option key={p.code} value={p.code}>
@@ -372,8 +378,8 @@ export default function CotizacionForm() {
 
           {/* Lada manual: solo aparece si eligió "Otro país" */}
           {esOtroPais && (
-            <div className="flex items-center rounded-lg border border-line bg-white pl-2 focus-within:border-primary">
-              <span className="text-sm text-muted">+</span>
+            <div className="flex items-center rounded-lg border border-white/15 bg-white/10 pl-2 focus-within:border-primary-light">
+              <span className="text-sm text-white/60">+</span>
               <input
                 aria-label="Lada (código de país)"
                 type="tel"
@@ -384,7 +390,7 @@ export default function CotizacionForm() {
                   setLadaOtro(e.target.value.replace(/\D/g, "").slice(0, 4));
                   setErrorTel("");
                 }}
-                className="w-14 bg-transparent px-1 py-2 text-sm text-ink outline-none"
+                className="w-14 bg-transparent px-1 py-2 text-sm text-white outline-none"
                 placeholder="39"
               />
             </div>
@@ -403,8 +409,8 @@ export default function CotizacionForm() {
               setTelefono(e.target.value.replace(/[^\d\s-]/g, ""));
               setErrorTel("");
             }}
-            className={`min-w-[150px] flex-1 rounded-lg border bg-white px-3 py-2 text-sm text-ink outline-none focus:border-primary ${
-              errorTel ? "border-danger" : "border-line"
+            className={`min-w-[150px] flex-1 rounded-lg border bg-white/10 px-3 py-2 text-sm text-white placeholder:text-white/40 outline-none focus:border-primary-light ${
+              errorTel ? "border-danger" : "border-white/15"
             }`}
             placeholder={paisActual.ejemplo}
           />

@@ -33,7 +33,7 @@ const servicios: { titulo: string; desc: string; icon: ReactNode }[] = [
   {
     titulo: "Atención a flotillas",
     desc: "Convenios y atención especializada para empresas con flotillas de vehículos.",
-    icon: (<svg {...svg} className="h-9 w-9"><rect x="2" y="7" width="12" height="8" rx="2" /><path d="M14 9h4l3 3v3h-7z" /><circle cx="6" cy="18" r="1.5" /><circle cx="17.5" cy="18" r="1.5" /></svg>),
+    icon: (<svg {...svg} className="h-9 w-9"><path d="M2 5h7v4H2z" /><path d="M9 6h2.3l1.7 1.8V9H9z" /><rect x="4" y="11" width="9" height="5" rx="1.3" /><path d="M13 12.5h3l2 2V16h-5z" /><circle cx="7" cy="18" r="1.3" /><circle cx="15.5" cy="18" r="1.3" /></svg>),
   },
 ];
 
@@ -42,7 +42,7 @@ export default function Home() {
   return (
     <div>
       {/* Hero con video de fondo */}
-      <section className="relative isolate -mt-[72px] overflow-hidden">
+      <section className="relative isolate -mt-[88px] overflow-hidden">
         <video
           autoPlay
           muted
@@ -56,49 +56,42 @@ export default function Home() {
         {/* Capa verde oscuro para legibilidad del texto */}
         <div className="absolute inset-0 -z-10 bg-gradient-to-r from-primary-deep/92 via-primary-deep/72 to-primary-deep/35" />
 
-        <div className="mx-auto flex min-h-[78vh] max-w-6xl flex-col justify-center px-6 py-20 sm:min-h-[86vh] sm:py-24">
-          <div className="max-w-2xl">
-            <div className="flex items-center gap-2.5 text-primary-light">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 flex-none">
-                <path d="M12 3l7 3v5c0 4.4-3 7.8-7 9-4-1.2-7-4.6-7-9V6z" />
-                <path d="M9 12l2 2 4-4" />
-              </svg>
-              <span className="text-xs font-bold uppercase tracking-[0.2em]">
-                Nuestra prioridad es su satisfacción
-              </span>
-            </div>
-            <h1 className="mt-5 font-display text-[30px] font-extrabold leading-[1.1] tracking-tight text-white sm:text-6xl">
-              Parabrisas y cristales automotrices,{" "}
-              <span className="text-primary-light">instalados por expertos</span>
-            </h1>
-            <p className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-1 text-base font-semibold text-white/90 sm:text-lg">
-              <span>Profesionalismo.</span>
-              <span>Rapidez.</span>
-              <span>Calidad.</span>
-            </p>
-            <div className="mt-8">
-              <Link
-                href="/contacto"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-7 py-4 font-semibold text-white shadow-[0_16px_34px_-12px_rgba(0,0,0,.6)] ring-1 ring-white/10 transition-colors hover:bg-primary-dark sm:w-auto"
-              >
-                Recibe tu cotización
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
-                  <path d="M5 12h14M13 6l6 6-6 6" />
-                </svg>
-              </Link>
-            </div>
-
-            {/* Colaboración */}
-            <div className="mt-9">
-              <span className="block text-[11px] font-semibold uppercase tracking-[0.18em] text-white/50">
-                En colaboración con
-              </span>
-              <div className="mt-3 flex items-center gap-4">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/pilkington-blanco.png" alt="Pilkington" className="h-14 w-auto" />
-                <span className="h-6 w-px bg-white/25" />
-                <span className="font-display text-lg font-bold text-white/90">Glass Master</span>
+        <div className="relative z-10 mx-auto flex min-h-[80vh] max-w-6xl flex-col px-6 pb-10 pt-28 sm:min-h-[88vh] sm:pb-12 sm:pt-32">
+          <div className="flex flex-1 items-center">
+            <div className="max-w-2xl">
+              <h1 className="font-display text-[32px] font-extrabold leading-[1.08] tracking-tight text-white sm:text-6xl">
+                Parabrisas y cristales automotrices,{" "}
+                <span className="text-primary-light">instalados por expertos</span>
+              </h1>
+              <p className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-1 text-base font-semibold text-white/90 sm:text-lg">
+                <span>Profesionalismo.</span>
+                <span>Rapidez.</span>
+                <span>Calidad.</span>
+              </p>
+              <div className="mt-8">
+                <Link
+                  href="/contacto"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-7 py-4 font-semibold text-white shadow-[0_16px_34px_-12px_rgba(0,0,0,.6)] ring-1 ring-white/10 transition-colors hover:bg-primary-dark sm:w-auto"
+                >
+                  Recibe tu cotización
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
+                    <path d="M5 12h14M13 6l6 6-6 6" />
+                  </svg>
+                </Link>
               </div>
+            </div>
+          </div>
+
+          {/* Colaboración (al fondo del video) */}
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-white/10 pt-6">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/50">
+              En colaboración con
+            </span>
+            <div className="flex items-center gap-4">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/pilkington-blanco.png" alt="Pilkington" className="h-12 w-auto sm:h-14" />
+              <span className="h-6 w-px bg-white/25" />
+              <span className="font-display text-lg font-bold text-white/90">Glass Master</span>
             </div>
           </div>
         </div>
@@ -199,7 +192,7 @@ export default function Home() {
                   className="flex h-32 w-44 flex-none items-center justify-center rounded-3xl border border-line bg-white p-5 shadow-sm shadow-primary-deep/5"
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={a.logo} alt={a.nombre} className="max-h-full max-w-full object-contain" />
+                  <img src={a.logo} alt={a.nombre} className="max-h-12 max-w-[78%] object-contain" />
                 </div>
               ))}
             </div>
@@ -232,7 +225,9 @@ export default function Home() {
               </div>
             ))}
             {/* CTA card */}
-            <div className="flex flex-col justify-center rounded-[26px] bg-coal p-7 text-white">
+            <div className="relative isolate flex flex-col justify-center overflow-hidden rounded-[26px] bg-coal p-7 text-white">
+              <div className="pointer-events-none absolute -right-10 -top-12 -z-10 h-48 w-48 rounded-full bg-primary/45 blur-3xl" />
+              <div className="pointer-events-none absolute -bottom-14 -left-10 -z-10 h-44 w-44 rounded-full bg-primary/25 blur-3xl" />
               <h3 className="font-display text-lg font-bold">¿Tu caso es especial?</h3>
               <p className="mt-2 text-sm text-white/70">Cuéntanos qué necesitas y te cotizamos sin compromiso.</p>
               <Link

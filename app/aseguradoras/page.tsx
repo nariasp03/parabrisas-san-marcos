@@ -30,7 +30,7 @@ export default function AseguradorasPage() {
               <img
                 src={a.logo}
                 alt={a.nombre}
-                className="max-h-full max-w-full object-contain"
+                className="max-h-12 max-w-[78%] object-contain"
               />
             ) : (
               <span className="font-display text-lg font-bold text-ink">{a.nombre}</span>
