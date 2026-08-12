@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const cristales = [
   "Parabrisas",
@@ -78,6 +78,14 @@ export default function CotizacionForm() {
   const [telefono, setTelefono] = useState("");
   const [ladaOtro, setLadaOtro] = useState(""); // lada manual para "Otro país"
   const [errorTel, setErrorTel] = useState("");
+
+  // Cuando el envío se completa, subimos la vista hasta arriba para que el
+  // cliente vea el mensaje de "solicitud recibida" sin tener que scrollear.
+  useEffect(() => {
+    if (enviado) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [enviado]);
 
   const esDomicilio = sucursal.startsWith("Servicio a domicilio");
 
