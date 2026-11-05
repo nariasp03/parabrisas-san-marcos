@@ -20,11 +20,14 @@ const sucursales: { label: string; tel: string; wa: string }[] = [
   { label: "Zacatecas, Zac. (Héroes de la Reforma)", tel: "492 491 0921", wa: "524491192439" },
   { label: "Lagos de Moreno, Jal. (Pueblo de Moya)", tel: "474 108 0287", wa: "524741080287" },
   { label: "León, Gto. (Jardines de Oriente)", tel: "477 141 9055", wa: "524771419055" },
-  { label: "Servicio a domicilio — Aguascalientes", tel: "449 309 3246", wa: "524493093246" },
-  { label: "Servicio a domicilio — Zacatecas", tel: "492 491 0921", wa: "524491192439" },
-  { label: "Servicio a domicilio — León", tel: "477 141 9055", wa: "524771419055" },
-  { label: "Servicio a domicilio — Lagos de Moreno, San Juan de los Lagos o Encarnación de Díaz", tel: "474 108 0287", wa: "524741080287" },
-  { label: "Servicio a domicilio — Villa Hidalgo", tel: "449 401 6472", wa: "524494016472" },
+  // Servicio a domicilio: desactivado temporalmente a petición del negocio.
+  // Para volver a ofrecerlo, basta con descomentar estas cinco opciones; el
+  // resto del formulario (la pregunta de la dirección) ya lo soporta solo.
+  // { label: "Servicio a domicilio — Aguascalientes", tel: "449 309 3246", wa: "524493093246" },
+  // { label: "Servicio a domicilio — Zacatecas", tel: "492 491 0921", wa: "524491192439" },
+  // { label: "Servicio a domicilio — León", tel: "477 141 9055", wa: "524771419055" },
+  // { label: "Servicio a domicilio — Lagos de Moreno, San Juan de los Lagos o Encarnación de Díaz", tel: "474 108 0287", wa: "524741080287" },
+  // { label: "Servicio a domicilio — Villa Hidalgo", tel: "449 401 6472", wa: "524494016472" },
 ];
 
 const inputClass =
@@ -56,20 +59,12 @@ const paises = [
 // WhatsApp por defecto (respaldo). El real se toma de la sucursal elegida.
 const WHATSAPP = "524493093246";
 
-// Llave de Web3Forms: cuando el cliente elige "Teléfono", el formulario envía
-// un correo con sus datos a la dirección registrada en web3forms.com.
-const WEB3FORMS_KEY = "8ff836e4-ba1f-4e2f-80c6-da58417be9b3";
-
 type TipoCliente = "particular" | "asegurado" | "flotilla" | "";
 
 export default function CotizacionForm() {
   const [tipoCliente, setTipoCliente] = useState<TipoCliente>("");
   const [sucursal, setSucursal] = useState("");
   const [enviado, setEnviado] = useState(false);
-  // Cómo terminó el envío, para mostrar el mensaje correcto al cliente.
-  const [metodoEnviado, setMetodoEnviado] = useState<"whatsapp" | "telefono">("whatsapp");
-  const [enviando, setEnviando] = useState(false); // mientras se manda el correo
-  const [errorEnvio, setErrorEnvio] = useState(""); // si falla el correo
   // Enlace de WhatsApp con el cuestionario ya escrito (se arma al enviar).
   const [waLink, setWaLink] = useState(`https://wa.me/${WHATSAPP}`);
 
@@ -104,7 +99,6 @@ export default function CotizacionForm() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setErrorEnvio("");
 
     // Si el teléfono no es válido, no enviamos y mostramos el motivo.
     if (!telValido) {
@@ -146,9 +140,6 @@ export default function CotizacionForm() {
             ? "Flotilla"
             : get("tipoCliente");
 
-    const quierePorTelefono = get("contacto") === "telefono";
-    const contactoLabel = quierePorTelefono ? "Teléfono (llamar)" : "WhatsApp";
-
     // Se arma el mensaje solo con los campos que aplican.
     const lineas = [
       "*Nueva solicitud de cotización - Parabrisas San Marcos*",
@@ -166,7 +157,6 @@ export default function CotizacionForm() {
       `*Sucursal:* ${get("sucursal")}`,
       get("direccionDomicilio") &&
         `*Dirección del servicio a domicilio:* ${get("direccionDomicilio")}`,
-      `*Contactar por:* ${contactoLabel}`,
     ].filter(Boolean);
 
     // Enlace de WhatsApp con el cuestionario ya escrito. Lo guardamos para
@@ -197,61 +187,13 @@ export default function CotizacionForm() {
         cristal: get("cristal"),
         sucursal: get("sucursal"),
         direccion_domicilio: get("direccionDomicilio"),
-        contacto_via: quierePorTelefono ? "telefono" : "whatsapp",
+        contacto_via: "whatsapp",
       }),
     }).catch(() => {});
 
-    // Opción TELÉFONO: el cliente quiere que le llamemos. Le mandamos el correo
-    // a la cotizadora (no depende de que el cliente tenga WhatsApp).
-    if (quierePorTelefono) {
-      setEnviando(true);
-      try {
-        const resp = await fetch("https://api.web3forms.com/submit", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify({
-            access_key: WEB3FORMS_KEY,
-            subject: "Nueva cotización para LLAMAR - Parabrisas San Marcos",
-            from_name: "Sitio web Parabrisas San Marcos",
-            Nombre: get("nombre"),
-            Teléfono: telCompleto,
-            "Tipo de cliente": tipoLabel,
-            ...(get("aseguradora") && { Aseguradora: get("aseguradora") }),
-            ...(get("empresa") && { "Empresa / flotilla": get("empresa") }),
-            ...(get("numUnidades") && { "Unidades a atender": get("numUnidades") }),
-            ...(esFlotilla
-              ? { "Vehículos y modelos": vehiculoTexto }
-              : { Marca: marca, Modelo: modelo, Año: anio }),
-            "Cristal a reemplazar": get("cristal"),
-            Sucursal: get("sucursal"),
-            ...(get("direccionDomicilio") && {
-              "Dirección a domicilio": get("direccionDomicilio"),
-            }),
-            "Contactar por": "Teléfono (el cliente pide que le llamen)",
-            message: lineas.join("\n"),
-          }),
-        });
-        const json = await resp.json();
-        if (!json.success) throw new Error(json.message || "Error al enviar");
-        setMetodoEnviado("telefono");
-        setEnviado(true);
-      } catch {
-        setErrorEnvio(
-          "No pudimos enviar tu solicitud. Revisa tu conexión e inténtalo de nuevo, o contáctanos por WhatsApp.",
-        );
-      } finally {
-        setEnviando(false);
-      }
-      return;
-    }
-
-    // Opción WHATSAPP: abrimos WhatsApp en el dispositivo del cliente con el
-    // mensaje ya armado, listo para que solo presione enviar.
+    // Abrimos WhatsApp en el dispositivo del cliente con el mensaje ya armado,
+    // listo para que solo presione enviar. Llega al WhatsApp de su sucursal.
     window.open(waUrl, "_blank");
-    setMetodoEnviado("whatsapp");
     setEnviado(true);
   }
 
@@ -260,64 +202,34 @@ export default function CotizacionForm() {
     return (
       <div className="rounded-2xl border border-line bg-bgalt p-6 text-center sm:p-8">
         <div className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-primary/10 text-primary">
-          {metodoEnviado === "telefono" ? (
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-7 w-7">
-              <path d="M6.5 10.8a13 13 0 0 0 6.7 6.7l2-2a1 1 0 0 1 1-.25 10 10 0 0 0 3.2.5 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A16 16 0 0 1 3 5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1 10 10 0 0 0 .5 3.2 1 1 0 0 1-.25 1z" />
-            </svg>
-          ) : (
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="h-7 w-7">
-              <path d="M5 12l4.5 4.5L19 7" />
-            </svg>
-          )}
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="h-7 w-7">
+            <path d="M5 12l4.5 4.5L19 7" />
+          </svg>
         </div>
-        {metodoEnviado === "telefono" ? (
-          <>
-            <h2 className="mt-3 font-display text-xl font-bold text-ink">
-              ¡Solicitud recibida!
-            </h2>
-            <p className="mt-2 text-muted">
-              Gracias, ya recibimos tu solicitud de cotización. Te{" "}
-              <strong>llamaremos pronto</strong> al número que nos diste. Si
-              prefieres, también puedes{" "}
-              <a
-                href={waLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-semibold text-primary hover:underline"
-              >
-                escribirnos por WhatsApp
-              </a>
-              .
-            </p>
-            {sucSel?.tel && (
-              <p className="mt-3 text-sm text-muted">
-                O llámanos directamente:{" "}
-                <a
-                  href={`tel:+52${sucSel.tel.replace(/\s/g, "")}`}
-                  className="font-semibold text-primary hover:underline"
-                >
-                  {sucSel.tel}
-                </a>
-              </p>
-            )}
-          </>
-        ) : (
-          <>
-            <h2 className="mt-3 font-display text-xl font-bold text-ink">¡Casi listo!</h2>
-            <p className="mt-2 text-muted">
-              Se abrió WhatsApp con tu solicitud lista. Solo presiona{" "}
-              <strong>enviar</strong> para que recibamos tu cotización. Si no se abrió,{" "}
-              <a
-                href={waLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-semibold text-primary hover:underline"
-              >
-                escríbenos por aquí
-              </a>
-              .
-            </p>
-          </>
+        <h2 className="mt-3 font-display text-xl font-bold text-ink">¡Casi listo!</h2>
+        <p className="mt-2 text-muted">
+          Se abrió WhatsApp con tu solicitud lista. Solo presiona{" "}
+          <strong>enviar</strong> para que recibamos tu cotización. Si no se abrió,{" "}
+          <a
+            href={waLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold text-primary hover:underline"
+          >
+            escríbenos por aquí
+          </a>
+          .
+        </p>
+        {sucSel?.tel && (
+          <p className="mt-3 text-sm text-muted">
+            O llámanos directamente:{" "}
+            <a
+              href={`tel:+52${sucSel.tel.replace(/\s/g, "")}`}
+              className="font-semibold text-primary hover:underline"
+            >
+              {sucSel.tel}
+            </a>
+          </p>
         )}
         <button
           onClick={() => {
@@ -328,7 +240,6 @@ export default function CotizacionForm() {
             setTelefono("");
             setLadaOtro("");
             setErrorTel("");
-            setErrorEnvio("");
           }}
           className="mt-6 rounded-full bg-primary px-6 py-2 text-sm font-semibold text-white hover:bg-primary-light"
         >
@@ -637,46 +548,11 @@ export default function CotizacionForm() {
         </div>
       )}
 
-      {/* ¿Por dónde le contactamos? */}
-      <div>
-        <span className="text-sm font-medium">
-          ¿Por dónde le contactamos? <span className="text-danger">*</span>
-        </span>
-        <div className="mt-2 flex gap-6">
-          <label className="flex items-center gap-2 text-sm">
-            <input
-              type="radio"
-              name="contacto"
-              value="whatsapp"
-              required
-              className="accent-primary"
-            />
-            WhatsApp
-          </label>
-          <label className="flex items-center gap-2 text-sm">
-            <input
-              type="radio"
-              name="contacto"
-              value="telefono"
-              className="accent-primary"
-            />
-            Teléfono
-          </label>
-        </div>
-      </div>
-
-      {errorEnvio && (
-        <p className="rounded-lg bg-danger/10 px-4 py-3 text-sm text-danger">
-          {errorEnvio}
-        </p>
-      )}
-
       <button
         type="submit"
-        disabled={enviando}
-        className="w-full rounded-full bg-white px-6 py-3.5 font-bold text-primary transition-colors hover:bg-soft disabled:opacity-60"
+        className="w-full rounded-full bg-white px-6 py-3.5 font-bold text-primary transition-colors hover:bg-soft"
       >
-        {enviando ? "Enviando..." : "Recibir cotización"}
+        Recibir cotización
       </button>
     </form>
   );
